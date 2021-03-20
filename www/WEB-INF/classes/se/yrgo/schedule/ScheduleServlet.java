@@ -59,11 +59,19 @@ public class ScheduleServlet extends HttpServlet {
         e.printStackTrace();
       }
       // Get a formatter, by asking the parser for the format (defaults to HTML)
-      Formatter formatter = FormatterFactory.getFormatter(parser.format());
-      // Format the result to the format according to the parser:
-      String result = formatter.format(assignments);
-      // Print the result and close the PrintWriter
-      out.println(result);
+      try {
+        Formatter formatter = FormatterFactory.getFormatter(parser.format());
+        // Format the result to the format according to the parser:
+        String result = formatter.format(assignments);
+        // Print the result and close the PrintWriter
+        out.println(result);
+        
+      } catch (IllegalArgumentException e) {
+        out.println("<html><head><title>Format error</title></head>");
+        out.println("<body>Format missing or not supported");
+        out.println(" - We support xml and json</body>");
+        out.println("</html>");
+      }
       out.close();
     }
 }

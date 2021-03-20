@@ -43,9 +43,13 @@ public class ParamParser {
       type.toString(), teacherId, day, contentType, format); */
   }
 
-  private void parseContentType() {
-    // Default to text/html
-    if (format == null) {
+private void parseContentType() {
+    if (format != null && format.equalsIgnoreCase("json")) {
+      contentType = "application/json;charset=" + UTF_8.name();
+    } else if (format != null && format.equalsIgnoreCase("xml")) {
+      contentType = "application/xml;charset=" + UTF_8.name();
+    } // Default to text/html
+    else { // format param missing or illegal format!
       contentType = "text/html;charset=" + UTF_8.name();
     }
   }
