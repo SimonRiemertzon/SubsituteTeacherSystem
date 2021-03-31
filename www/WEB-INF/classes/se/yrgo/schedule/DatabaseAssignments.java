@@ -10,18 +10,16 @@ import java.sql.SQLException;
  */
 public class DatabaseAssignments implements Assignments {
 
-  private static final String SELECT_ALL =
-    new StringBuilder("select day, name, school_name from schedule")
-    .append(" join substitute on schedule.substitute_id=substitute.substitute_id")
-    .append(" join school on schedule.school_id = school.school_id")
-    .toString();
-  private static final String SELECT_WITH_SUBSTITUTE_ID =
-    new StringBuilder("select day, name, school_name from schedule")
-    .append(" join substitute on schedule.substitute_id=substitute.substitute_id")
-    .append(" join school on schedule.school_id = school.school_id WHERE substitute.substitute_id=")
-    .toString();
-  
+  private static final String SELECT_ALL = new StringBuilder("select day, name, school_name from schedule")
+      .append(" join substitute on schedule.substitute_id=substitute.substitute_id")
+      .append(" join school on schedule.school_id = school.school_id").toString();
+  private static final String SELECT_WITH_SUBSTITUTE_ID = new StringBuilder(
+      "select day, name, school_name from schedule")
+          .append(" join substitute on schedule.substitute_id=substitute.substitute_id")
+          .append(" join school on schedule.school_id = school.school_id WHERE substitute.substitute_id=").toString();
+
   DBHelper db;
+
   DatabaseAssignments() {
     db = new DBHelper();
   }
@@ -31,20 +29,21 @@ public class DatabaseAssignments implements Assignments {
     try {
       ResultSet rs = db.fetch(SELECT_ALL);
       while (rs.next()) {
-        result.add(new Assignment(rs.getString("name"), rs.getString("day"), rs.getString("school_name")));
+        result.add(new Assignment(new Substitute(rs.getString("name")), rs.getString("day"),
+            new School(rs.getString("school_name"), rs.getString("adress"))));
       }
       return result;
     } catch (SQLException sqle) {
       throw new AccessException("Problem fetching all assignments", sqle);
     }
   }
-  
+
   public List<Assignment> forTeacher(String teacherId) throws AccessException {
     List<Assignment> result = new ArrayList<>();
     try {
       ResultSet rs = db.fetch(SELECT_WITH_SUBSTITUTE_ID + teacherId);
       while (rs.next()) {
-        result.add(new Assignment(rs.getString("name"), rs.getString("day"), rs.getString("school_name")));
+        result.add(new Assignment(new Substitute(rs.getString("name")), rs.getString("day"), new School(rs.getString("school_name"), rs.getString("adress"))));
       }
       return result;
     } catch (SQLException sqle) {
@@ -57,7 +56,7 @@ public class DatabaseAssignments implements Assignments {
     try {
       ResultSet rs = db.fetch(SELECT_ALL + " where schedule.day = '" + date + " 08:00:00'");
       while (rs.next()) {
-        result.add(new Assignment(rs.getString("name"), rs.getString("day"), rs.getString("school_name")));
+        result.add(new Assignment(new Substitute(rs.getString("name")), rs.getString("day"), new School(rs.getString("school_name"), rs.getString("adress"))));
       }
       return result;
     } catch (SQLException sqle) {
@@ -71,7 +70,7 @@ public class DatabaseAssignments implements Assignments {
       ResultSet rs = db.fetch(SELECT_WITH_SUBSTITUTE_ID + teacherId + " and schedule.day='" + date + " 08:00:00'");
       System.out.println(SELECT_WITH_SUBSTITUTE_ID + teacherId + " and schedule.day='" + date + " 08:00:00'");
       while (rs.next()) {
-        result.add(new Assignment(rs.getString("name"), rs.getString("day"), rs.getString("school_name")));
+        result.add(new Assignment(new Substitute(rs.getString("name")), rs.getString("day"), new School(rs.getString("school_name"), rs.getString("adress"))));
       }
       return result;
     } catch (SQLException sqle) {
