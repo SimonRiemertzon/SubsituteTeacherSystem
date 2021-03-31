@@ -1,4 +1,7 @@
-package se.yrgo.schedule;
+package se.yrgo.schedule.data;
+
+
+
 
 import java.sql.*;
 

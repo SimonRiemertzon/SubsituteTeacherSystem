@@ -1,4 +1,5 @@
-package se.yrgo.schedule;
+package se.yrgo.schedule.format;
+import se.yrgo.schedule.domain.*;
 
 import java.io.StringWriter;
 import java.util.List;

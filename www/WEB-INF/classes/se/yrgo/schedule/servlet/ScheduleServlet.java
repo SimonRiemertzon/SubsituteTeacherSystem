@@ -1,5 +1,4 @@
-package se.yrgo.schedule;
-
+package se.yrgo.schedule.servlet;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -8,6 +7,11 @@ import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
+
+import se.yrgo.schedule.domain.*;
+import se.yrgo.schedule.data.*;
+import se.yrgo.schedule.format.*;
+
 
 /**
  * <p>Listens to requests on localhost:8080/v1/ and accepts the following parameters:
@@ -26,7 +30,7 @@ public class ScheduleServlet extends HttpServlet {
       request.setCharacterEncoding(UTF_8.name());
 
       // Parse the arguments - see ParamParser class
-      ParamParser parser = new ParamParser(request);
+      ParamParser parser = new ParamParser(request, response);
       // Set the content type (using the parser)
       response.setContentType(parser.contentType());
       // To write the response, we're using a PrintWriter
@@ -58,6 +62,12 @@ public class ScheduleServlet extends HttpServlet {
         System.err.println("Error: " +e);
         e.printStackTrace();
       }
+
+      if (assignments.isEmpty()) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        
+      }
+
       // Get a formatter, by asking the parser for the format (defaults to HTML)
       try {
         Formatter formatter = FormatterFactory.getFormatter(parser.format());

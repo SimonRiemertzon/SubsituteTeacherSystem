@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
   <servlet>
     <servlet-name>schedule</servlet-name>
-    <servlet-class>se.yrgo.schedule.ScheduleServlet</servlet-class>
+    <servlet-class>se.yrgo.schedule.servlet.ScheduleServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>schedule</servlet-name>

@@ -1,4 +1,7 @@
-package se.yrgo.schedule;
+package se.yrgo.schedule.format;
+import se.yrgo.schedule.servlet.*;
+import se.yrgo.schedule.domain.*;
+import se.yrgo.schedule.data.*;
 
 import java.util.List;
 import org.json.*;

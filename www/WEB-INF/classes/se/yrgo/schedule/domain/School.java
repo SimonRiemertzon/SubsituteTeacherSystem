@@ -1,4 +1,5 @@
-package se.yrgo.schedule;
+package se.yrgo.schedule.domain;
+
 
 public class School {
     private String name;
