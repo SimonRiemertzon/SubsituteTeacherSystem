@@ -2,16 +2,16 @@ package se.yrgo.schedule;
 
 public class School {
     private String name;
-    private String adress;
+    private String address;
 
-    public School(String name, String adress) {
+    public School(String name, String address) {
         super();
         this.name = name;
-        this.adress = adress;
+        this.address = address;
     }
 
     public String adress() {
-        return adress;
+        return address;
     }
 
     public String name() {
@@ -20,7 +20,7 @@ public class School {
 
     @Override
     public String toString() {
-        return new StringBuilder().append(String.format(" ( %s Adress: %s", name, adress)).toString();
+        return new StringBuilder().append(String.format(" ( %s Adress: %s", name, address)).toString();
 
         }
 }
