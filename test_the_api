@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "///////////////////****************************//////////////////"
+echo "Running correct request"
+echo "///////////////////****************************//////////////////"
+lwp-request -m GET -e 'http://localhost:8080/v1?format=xml&day=2018-01-16'
+echo "///////////////////****************************//////////////////"
+echo "Running bad request with 'jsong' as format"
+echo "///////////////////****************************//////////////////"
+lwp-request -m GET -e 'http://localhost:8080/v1?format=jsong&day=2018-01-16'
+echo "///////////////////****************************//////////////////"
+echo "Running request that cant be found"
+echo "///////////////////****************************//////////////////"
+lwp-request -m GET -e 'http://localhost:8080/v1?format=jsong&day=2010-01-16'
